@@ -3,6 +3,7 @@
   ******************************************************************************
   * @file           : main.c
   * @brief          : Main program body
+  * @author	    : vaishavs
   ******************************************************************************
   * @attention
   *
@@ -28,8 +29,6 @@
 #include <stdint.h>
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,7 +39,6 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define NUM_SAMPLES 750
-//#define BLINKING_RATE_MS 500 // Blinking rate in milliseconds
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -113,8 +111,7 @@ int main(void)
 
   /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+  /* USER CODE BEGIN 3 */
   float signal_in[NUM_SAMPLES];
   float sample_instance=0.02/15.0, x=0.0, w=2*PI*50, wc=2*PI*1000;
   srand(time(0));
@@ -166,13 +163,6 @@ int main(void)
   arm_conv_f32((float*)&sparse[0], 150, (float*)&h[0], 601, (float*)&final_out[0]);
 
 
-
-//	/* Performance Comparison */
-//  float *in = &signal_in[0], *out = &final_out[0], snr, snr_abs;
-//  for(uint8_t i=0;i<15;i++)
-//	snr = fabsf(arm_snr_f32(in+(i*50), out+(i*50), 50));
-//  printf("SNR: %f\n",snr);
-
   /* Printing the values */
   //Received signal
    sample_instance=0.02/15.0; x=0.0;
@@ -197,6 +187,12 @@ int main(void)
         HAL_Delay(10);	}
     printf("\n");
 
+
+    	/* Performance Comparison */
+      float *in = &signal_in[0], *out = &final_out[0], snr;
+      for(uint8_t i=0;i<15;i++)
+    	snr = fabsf(arm_snr_f32(in+(i*50), out+(i*50), 50));
+      printf("SNR: %f\n",snr);
   /* USER CODE END 3 */
 }
 
