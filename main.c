@@ -187,7 +187,7 @@ int main(void)
     float *in = &signal_in[0], *out = &final_out[0], snr;
     for(uint8_t i=0;i<15;i++)
     snr = fabsf(arm_snr_f32(in+(i*50), out+(i*50), 50));
-    printf("SNR: %f\n",snr);
+    printf("Error: %f\n",snr);
 
   /* USER CODE END 3 */
 }
