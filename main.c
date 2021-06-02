@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file           : main.c
   * @brief          : Main program body
-  * @author			: vaish
+  * @author	    : vaish
   ******************************************************************************
   * @attention
   *
@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "arm_math.h"
+#include "math_helper.h"
 #include <stdint.h>
 #include <math.h>
 #include <stdio.h>
@@ -155,7 +156,7 @@ int main(void)
 
 
   /* Printing the values */
-//  // Received signal
+//  // Reference signal
 //     x=0.0;
 //     printf("REFERENCE SIGNAL\n");
 //     for(int i=0; i<750; i++)
@@ -164,23 +165,29 @@ int main(void)
 //         HAL_Delay(10);	}
 //     printf("\n");
 
-  // Received signal
-     x=0.0;
-     printf("RECEIVED SIGNAL\n");
-     for(int i=0; i<750; i++)
-     {   printf("Received signal at %f us: %f\n",x,received_signal[i]);
-   	  	 x = x+sample_instance;
-         HAL_Delay(10);	}
-     printf("\n");
+//  // Received signal
+//     x=0.0;
+//     printf("RECEIVED SIGNAL\n");
+//     for(int i=0; i<750; i++)
+//     {   printf("Received signal at %f us: %f\n",x,received_signal[i]);
+//   	  	 x = x+sample_instance;
+//         HAL_Delay(10);	}
+//     printf("\n");
 
-  // Final output
-     x=0.0;
-     printf("\nOUTPUT SIGNAL\n");
-     for(int i=0; i<750; i++)
-     {   printf("Output signal at %f us: %f\n",x,final_out[i]);
-   	  	 x = x+sample_instance;
-         HAL_Delay(10);	}
-     printf("\n");
+ // Final output
+    x=0.0;
+    printf("\nOUTPUT SIGNAL\n");
+    for(int i=0; i<750; i++)
+    {   printf("Output signal at %f us: %f\n",x,final_out[i]);
+  	  	 x = x+sample_instance;
+        HAL_Delay(10);	}
+    printf("\n");
+	
+ // Performance Comparison
+    float *in = &signal_in[0], *out = &final_out[0], snr;
+    for(uint8_t i=0;i<15;i++)
+    snr = fabsf(arm_snr_f32(in+(i*50), out+(i*50), 50));
+    printf("SNR: %f\n",snr);
 
   /* USER CODE END 3 */
 }
